@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WhatsApp Style Chatbot</title>
+  
+</head>
+<Style>
+body {
+  font-family: Arial, sans-serif;
+  background: #e5ddd5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.chat-container {
+  width: 400px;
+  height: 600px;
+  background: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.chat-header {
+  background-color: #075e54;
+  color: white;
+  padding: 15px;
+  font-size: 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.chat-box {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  background: #ece5dd;
+}
+
+.message {
+  margin-bottom: 15px;
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 10px;
+  line-height: 1.4;
+}
+
+.user {
+  background: #dcf8c6;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.bot {
+  background: #fff;
+  align-self: flex-start;
+  margin-right: auto;
+}
+
+.input-area {
+  display: flex;
+  border-top: 1px solid #ccc;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+button {
+  padding: 15px;
+  background: #075e54;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+</Style>
+<script>
+function sendMessage() {
+  const userInput = document.getElementById('user-input');
+  const message = userInput.value.trim();
+  if (message === '') return;
+
+  addMessage(message, 'user');
+  respondToMessage(message.toLowerCase());
+  userInput.value = '';
+}
+
+function addMessage(text, sender) {
+  const chatBox = document.getElementById('chat-box');
+  const msg = document.createElement('div');
+  msg.classList.add('message', sender);
+  msg.innerText = text;
+  chatBox.appendChild(msg);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function respondToMessage(message) {
+  let response = "I'm not sure how to answer that. Try asking about services, hours, or contact info.";
+
+  if (message.includes('hi') || message.includes('hello')) {
+    response = "👋 Hello! Welcome to our service. Ask me about:\n- services\n- timings\n- contact";
+  } else if (message.includes('services')) {
+    response = "📋 We offer: Digital Marketing, Web Development, SEO, and Training.";
+  } else if (message.includes('timing') || message.includes('hours')) {
+    response = "⏰ Our hours: Mon–Sat 9am–6pm, Sunday closed.";
+  } else if (message.includes('contact')) {
+    response = "📞 Call us at +91-XXXXXXXXXX or email info@yourdomain.com.";
+  } else if (message.includes('location')) {
+    response = "📍 We're located in Kochi, Kerala.";
+  }
+
+  setTimeout(() => addMessage(response, 'bot'), 500);
+}
+</script>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">WhatsApp ChatBot</div>
+    <div class="chat-box" id="chat-box"></div>
+    <div class="input-area">
+      <input type="text" id="user-input" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
